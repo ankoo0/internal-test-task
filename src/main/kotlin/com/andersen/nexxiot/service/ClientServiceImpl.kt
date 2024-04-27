@@ -2,13 +2,15 @@ package com.andersen.nexxiot.service
 
 import com.andersen.nexxiot.domain.request.ClientCreateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
+import com.andersen.nexxiot.integration.GenderizeFeignClient
 import org.springframework.stereotype.Service
 import java.util.UUID
 
 @Service
 class ClientServiceImpl(
     private val clientMapper: ClientMapper,
-    private val clientDatabaseService: ClientDatabaseService
+    private val clientDatabaseService: ClientDatabaseService,
+    private val genderizeFeignClient: GenderizeFeignClient
 ) : ClientService {
 
     override fun getById(id: UUID): ClientResponse {

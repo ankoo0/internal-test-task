@@ -1,3 +1,7 @@
+integration:
+    genderize:
+        url: https://api.genderize.io/
+
 spring:
     application:
         name: nexxiot
