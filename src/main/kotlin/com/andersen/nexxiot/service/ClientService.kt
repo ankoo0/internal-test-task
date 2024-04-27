@@ -1,16 +1,17 @@
 package com.andersen.nexxiot.service
 
-import com.andersen.nexxiot.model.request.ClientCreateRequest
-import com.andersen.nexxiot.model.response.ClientResponse
+import com.andersen.nexxiot.domain.request.ClientCreateRequest
+import com.andersen.nexxiot.domain.response.ClientResponse
+import java.util.UUID
 
 interface ClientService {
 
-    fun getById(id: Int): ClientResponse
+    fun getById(id: UUID): ClientResponse
 
     fun getAllByPage(page: Int): List<ClientResponse>
 
-    fun deleteById(id: Int)
+    fun deleteById(id: UUID)
 
-    fun save(request: ClientCreateRequest): ClientResponse
+    fun create(request: ClientCreateRequest): ClientResponse
 
 }

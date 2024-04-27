@@ -1,4 +1,4 @@
-package com.andersen.nexxiot.model.request
+package com.andersen.nexxiot.domain.request
 
 data class ClientCreateRequest(
     val firstName: String,

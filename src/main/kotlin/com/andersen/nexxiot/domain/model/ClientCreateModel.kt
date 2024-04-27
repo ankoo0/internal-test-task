@@ -1,6 +1,6 @@
-package com.andersen.nexxiot.model
+package com.andersen.nexxiot.domain.model
 
-data class ClientModel(
+data class ClientCreateModel(
     val firstName: String,
     val lastName: String,
     val job: String?,
