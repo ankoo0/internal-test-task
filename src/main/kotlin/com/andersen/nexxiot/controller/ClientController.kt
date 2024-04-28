@@ -10,6 +10,9 @@ import com.andersen.nexxiot.domain.request.ClientCreateRequest
 import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
 import com.andersen.nexxiot.service.ClientService
+import com.andersen.nexxiot.swagger.GetClientById
+import com.andersen.nexxiot.swagger.UpdateClient
+import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -34,11 +37,13 @@ class ClientController( private val clientService: ClientService) {
        return clientService.create(request)
     }
 
+    @GetClientById
     @GetMapping(GET)
     fun getClientById(@PathVariable("id") id: UUID): ClientResponse {
         return clientService.getById(id)
     }
 
+    @UpdateClient
     @PutMapping(UPDATE)
     fun updateClientById(@PathVariable("id") id: UUID, @Valid @RequestBody request: ClientUpdateRequest): ClientResponse {
         return clientService.updateById(id, request)

@@ -20,7 +20,7 @@ class LuceneIndexBuilder(
         val searchSession: SearchSession = Search.session(entityManager)
 
         val indexer = searchSession.massIndexer(ClientEntity::class.java)
-            .threadsToLoadObjects(7)
+            .threadsToLoadObjects(2)
 
         indexer.startAndWait()
     }
