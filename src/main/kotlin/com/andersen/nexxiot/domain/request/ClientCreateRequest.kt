@@ -31,5 +31,7 @@ data class ClientCreateRequest(
 
     val job: String?,
 
-    val position: String?
+    val position: String?,
+
+    val gender: String?
 )

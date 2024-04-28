@@ -1,0 +1,1 @@
+alter table client add column gender varchar(10) not null default 'MALE'

@@ -28,5 +28,9 @@ data class ClientEntity(
     var job: String?,
 
     @Column(name = "position")
-    var position: String?
+    var position: String?,
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender")
+    var gender: Gender
 )

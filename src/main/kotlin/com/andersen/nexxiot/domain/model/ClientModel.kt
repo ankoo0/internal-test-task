@@ -8,5 +8,6 @@ data class ClientModel(
     val lastName: String,
     val email: String,
     val job: String?,
-    val position: String?
+    val position: String?,
+    val gender: String?
 )

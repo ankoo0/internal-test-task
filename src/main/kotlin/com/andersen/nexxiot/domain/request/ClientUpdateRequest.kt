@@ -30,5 +30,7 @@ data class ClientUpdateRequest(
 
     val job: String?,
 
-    val position: String?
+    val position: String?,
+
+    val gender: String?
 )
