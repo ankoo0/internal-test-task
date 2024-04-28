@@ -27,6 +27,6 @@ data class ClientEntity(
     @Column(name = "job")
     var job: String?,
 
-    @Column(name = "occupation")
+    @Column(name = "position")
     var position: String?
 )

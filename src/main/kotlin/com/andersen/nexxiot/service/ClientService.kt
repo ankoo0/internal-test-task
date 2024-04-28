@@ -1,6 +1,7 @@
 package com.andersen.nexxiot.service
 
 import com.andersen.nexxiot.domain.request.ClientCreateRequest
+import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
 import java.util.UUID
 
@@ -14,6 +15,8 @@ interface ClientService {
 
     fun create(request: ClientCreateRequest): ClientResponse
 
-    fun search(query:String): List<ClientResponse>
+    fun searchClients(query:String): List<ClientResponse>
+
+    fun updateById(id:UUID, request: ClientUpdateRequest): ClientResponse
 
 }

@@ -3,6 +3,8 @@ package com.andersen.nexxiot.service
 import com.andersen.nexxiot.db.ClientRepository
 import com.andersen.nexxiot.domain.model.ClientCreateModel
 import com.andersen.nexxiot.domain.model.ClientModel
+import com.andersen.nexxiot.domain.request.ClientUpdateRequest
+import com.andersen.nexxiot.domain.response.ClientResponse
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -16,7 +18,16 @@ class ClientDatabaseService(
 ) {
 
     @Transactional
-    fun searchUsers(query: String): List<ClientModel> {
+     fun update(request: ClientUpdateRequest, id:UUID): ClientModel {
+         val existingClient = clientRepository.findById(id).orElseThrow { NoSuchElementException("No such user") }
+        clientMapper.updateEntity(existingClient,request)
+        val updatedClient = clientRepository.save(existingClient)
+        return clientMapper.toModel(updatedClient)
+     }
+
+
+        @Transactional(readOnly = true)
+    fun searchClients(query: String): List<ClientModel> {
        return clientRepository.searchClients(query)
             .map { clientMapper.toModel(it) }
     }

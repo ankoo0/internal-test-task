@@ -5,7 +5,9 @@ import com.andersen.nexxiot.constants.ClientUrlConstants.DELETE
 import com.andersen.nexxiot.constants.ClientUrlConstants.GET
 import com.andersen.nexxiot.constants.ClientUrlConstants.GET_ALL
 import com.andersen.nexxiot.constants.ClientUrlConstants.SEARCH
+import com.andersen.nexxiot.constants.ClientUrlConstants.UPDATE
 import com.andersen.nexxiot.domain.request.ClientCreateRequest
+import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
 import com.andersen.nexxiot.service.ClientService
 import jakarta.validation.Valid
@@ -37,9 +39,14 @@ class ClientController( private val clientService: ClientService) {
         return clientService.getById(id)
     }
 
+    @PutMapping(UPDATE)
+    fun updateClientById(@PathVariable("id") id: UUID, @Valid @RequestBody request: ClientUpdateRequest): ClientResponse {
+        return clientService.updateById(id, request)
+    }
+
     @GetMapping(SEARCH)
     fun getClientById(@RequestParam("query") query: String): List<ClientResponse> {
-        return clientService.search(query)
+        return clientService.searchClients(query)
     }
 
 }

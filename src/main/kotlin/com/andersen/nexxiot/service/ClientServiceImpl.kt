@@ -2,9 +2,9 @@ package com.andersen.nexxiot.service
 
 import com.andersen.nexxiot.domain.model.ClientModel
 import com.andersen.nexxiot.domain.request.ClientCreateRequest
+import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
 import com.andersen.nexxiot.integration.GenderizeFeignClient
-import com.andersen.nexxiot.integration.response.GenderizeResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -44,8 +44,13 @@ class ClientServiceImpl(
         return clientMapper.toClientResponse(clientModel)
     }
 
-    override fun search(query: String): List<ClientResponse> {
-        return clientDatabaseService.searchUsers(query).map { clientMapper.toClientResponse(it) }
+    override fun searchClients(query: String): List<ClientResponse> {
+        return clientDatabaseService.searchClients(query).map { clientMapper.toClientResponse(it) }
+    }
+
+    override fun updateById(id:UUID, request: ClientUpdateRequest): ClientResponse {
+        val clientModel = clientDatabaseService.update(request, id)
+        return clientMapper.toClientResponse(clientModel)
     }
 
 }

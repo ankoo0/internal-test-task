@@ -28,6 +28,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
 //	implementation("org.hibernate:hibernate-search-orm:5.11.12.Final")
 	implementation("org.hibernate.search:hibernate-search-mapper-orm:7.1.1.Final")
