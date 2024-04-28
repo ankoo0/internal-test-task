@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 @Component
 @Transactional
 class LuceneIndexBuilder(
-    @PersistenceContext val entityManager: EntityManager
+    @PersistenceContext private val entityManager: EntityManager
 ) : ApplicationListener<ApplicationReadyEvent> {
 
     override fun onApplicationEvent(event: ApplicationReadyEvent) {

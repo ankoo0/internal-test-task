@@ -21,9 +21,12 @@ data class ClientEntity(
     @FullTextField(analyzer = "name")
     var lastName: String,
 
+    @Column(name = "email")
+    var email: String,
+
     @Column(name = "job")
     var job: String?,
 
     @Column(name = "occupation")
-    var occupation: String?
+    var position: String?
 )

@@ -6,6 +6,7 @@ data class ClientModel(
     val id: UUID,
     val firstName: String,
     val lastName: String,
+    val email: String,
     val job: String?,
     val occupation: String?
 )

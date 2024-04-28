@@ -4,6 +4,7 @@ import org.hibernate.search.backend.lucene.analysis.LuceneAnalysisConfigurationC
 import org.hibernate.search.backend.lucene.analysis.LuceneAnalysisConfigurer
 
 class CustomLuceneAnalysisConfigurer : LuceneAnalysisConfigurer {
+
     override fun configure(context: LuceneAnalysisConfigurationContext) {
         println(context.availableTokenFilters())
         context.analyzer("name").custom()

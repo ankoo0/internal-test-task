@@ -4,8 +4,7 @@ import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 
 class SearchClientRepositoryImpl(
-    @PersistenceContext
-    private var entityManager: EntityManager
+    @PersistenceContext private var entityManager: EntityManager
 ) : SearchClientRepository {
 
     override fun searchClients(query: String): List<ClientEntity> {

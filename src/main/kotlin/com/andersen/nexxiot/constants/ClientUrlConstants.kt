@@ -10,5 +10,4 @@ object ClientUrlConstants {
     const val DELETE = BASE + ID
     const val SEARCH = "$BASE/search"
 
-
 }
