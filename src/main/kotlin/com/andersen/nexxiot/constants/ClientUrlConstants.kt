@@ -8,5 +8,7 @@ object ClientUrlConstants {
     const val CREATE = BASE
     const val GET_ALL = BASE
     const val DELETE = BASE + ID
+    const val SEARCH = "$BASE/search"
+
 
 }

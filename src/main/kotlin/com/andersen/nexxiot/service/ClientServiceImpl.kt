@@ -31,4 +31,8 @@ class ClientServiceImpl(
         return clientMapper.toClientResponse(clientModel)
     }
 
+    override fun search(query: String): List<ClientResponse> {
+       return clientDatabaseService.searchUsers(query).map { clientMapper.toClientResponse(it) }
+    }
+
 }

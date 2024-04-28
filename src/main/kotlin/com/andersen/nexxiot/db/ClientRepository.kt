@@ -1,5 +1,8 @@
 package com.andersen.nexxiot.db
 
+import jakarta.persistence.EntityManager
+import jakarta.persistence.PersistenceContext
+import org.springframework.core.annotation.MergedAnnotations.Search
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -10,4 +13,6 @@ import java.util.UUID
 interface ClientRepository : JpaRepository<ClientEntity,UUID>{
 
     override fun findAll(pageable:Pageable): Page<ClientEntity>
+
+
 }

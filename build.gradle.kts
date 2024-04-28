@@ -24,10 +24,15 @@ extra["springCloudVersion"] = "2023.0.1"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-security")
+//	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+
+//	implementation("org.hibernate:hibernate-search-orm:5.11.12.Final")
+	implementation("org.hibernate.search:hibernate-search-mapper-orm:7.1.1.Final")
+	implementation("org.hibernate.search:hibernate-search-bom:7.1.1.Final")
+	implementation("org.hibernate.search:hibernate-search-backend-lucene:7.1.1.Final")
 
 	implementation("jakarta.validation:jakarta.validation-api:3.0.2")
 	kapt("org.mapstruct:mapstruct-processor:1.5.3.Final")

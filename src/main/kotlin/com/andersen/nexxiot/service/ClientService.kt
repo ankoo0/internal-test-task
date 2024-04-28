@@ -14,4 +14,6 @@ interface ClientService {
 
     fun create(request: ClientCreateRequest): ClientResponse
 
+    fun search(query:String): List<ClientResponse>
+
 }

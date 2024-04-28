@@ -4,6 +4,7 @@ import com.andersen.nexxiot.constants.ClientUrlConstants.CREATE
 import com.andersen.nexxiot.constants.ClientUrlConstants.DELETE
 import com.andersen.nexxiot.constants.ClientUrlConstants.GET
 import com.andersen.nexxiot.constants.ClientUrlConstants.GET_ALL
+import com.andersen.nexxiot.constants.ClientUrlConstants.SEARCH
 import com.andersen.nexxiot.domain.request.ClientCreateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
 import com.andersen.nexxiot.service.ClientService
@@ -34,6 +35,11 @@ class ClientController( private val clientService: ClientService) {
     @GetMapping(GET)
     fun getClientById(@PathVariable("id") id: UUID): ClientResponse {
         return clientService.getById(id)
+    }
+
+    @GetMapping(SEARCH)
+    fun getClientById(@RequestParam("query") query: String): List<ClientResponse> {
+        return clientService.search(query)
     }
 
 }
