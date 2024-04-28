@@ -1,14 +1,11 @@
 package com.andersen.nexxiot.service
 
-import com.andersen.nexxiot.db.ClientEntity
 import com.andersen.nexxiot.db.ClientRepository
 import com.andersen.nexxiot.domain.model.ClientCreateModel
 import com.andersen.nexxiot.domain.model.ClientModel
-import jakarta.persistence.EntityManager
-import jakarta.persistence.PersistenceContext
-import org.hibernate.search.mapper.orm.Search
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 
@@ -16,29 +13,12 @@ import java.util.*
 class ClientDatabaseService(
     private val clientRepository: ClientRepository,
     private val clientMapper: ClientMapper,
-    @PersistenceContext
-private var entityManager: EntityManager
 ) {
 
-
-      fun searchUsers(text: String): List<ClientModel> {
-        val searchSession = Search.session(entityManager)
-
-        val result = searchSession.search(ClientEntity::class.java)
-            .where { f -> f.match()
-                .fields("firstName", "lastName")
-                .matching(text)
-                .fuzzy(2)
-                .analyzer("standard")
-                .boost(5f)
-
-            }
-
-            .fetch(20)
-
-        val hits = result.hits()
-        println(hits.toString())
-       return emptyList()
+    @Transactional
+    fun searchUsers(query: String): List<ClientModel> {
+       return clientRepository.searchClients(query)
+            .map { clientMapper.toModel(it) }
     }
 
     fun getById(id: UUID): ClientModel {

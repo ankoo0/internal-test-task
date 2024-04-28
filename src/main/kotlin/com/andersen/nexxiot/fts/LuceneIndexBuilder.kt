@@ -1,4 +1,4 @@
-package com.andersen.nexxiot.service
+package com.andersen.nexxiot.fts
 
 import com.andersen.nexxiot.db.ClientEntity
 import jakarta.persistence.EntityManager
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 @Transactional
-class BuildTransactionService(
+class LuceneIndexBuilder(
     @PersistenceContext val entityManager: EntityManager
 ) : ApplicationListener<ApplicationReadyEvent> {
 
