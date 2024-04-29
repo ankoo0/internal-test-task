@@ -17,7 +17,7 @@ class GlobalExceptionHandler {
     @ExceptionHandler
     fun handleGenericException(e: Exception) : ProblemDetail {
         logger.error(e.stackTraceToString())
-        return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR,e.message)
+        return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR,"Something went wrong")
     }
 
     @ExceptionHandler

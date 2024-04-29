@@ -1,4 +1,4 @@
-package com.andersen.nexxiot.service
+package com.andersen.nexxiot.service.impl
 
 import com.andersen.nexxiot.domain.model.ClientModel
 import com.andersen.nexxiot.domain.request.ClientCreateRequest
@@ -7,6 +7,8 @@ import com.andersen.nexxiot.domain.response.ClientResponse
 import com.andersen.nexxiot.exception.BusinessException
 import com.andersen.nexxiot.exception.CommonBusinessExceptions
 import com.andersen.nexxiot.integration.GenderizeFeignClient
+import com.andersen.nexxiot.service.ClientMapper
+import com.andersen.nexxiot.service.ClientService
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

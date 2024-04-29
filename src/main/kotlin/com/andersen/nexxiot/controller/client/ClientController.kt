@@ -1,4 +1,4 @@
-package com.andersen.nexxiot.controller
+package com.andersen.nexxiot.controller.client
 
 import com.andersen.nexxiot.constants.ClientUrlConstants.CREATE
 import com.andersen.nexxiot.constants.ClientUrlConstants.DELETE
@@ -7,13 +7,12 @@ import com.andersen.nexxiot.constants.ClientUrlConstants.GET_ALL
 import com.andersen.nexxiot.constants.ClientUrlConstants.SEARCH_BY_NAME
 import com.andersen.nexxiot.constants.ClientUrlConstants.SEARCH_BY_QUERY
 import com.andersen.nexxiot.constants.ClientUrlConstants.UPDATE
+import com.andersen.nexxiot.controller.client.swagger.*
 import com.andersen.nexxiot.domain.request.ClientCreateRequest
 import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
 import com.andersen.nexxiot.service.ClientService
-import com.andersen.nexxiot.swagger.*
 import jakarta.validation.Valid
-import jakarta.validation.constraints.NotBlank
 import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -22,32 +21,32 @@ import java.util.UUID
 @RestController
 class ClientController(private val clientService: ClientService) {
 
-    @GetAllClients
+    @DocumentGetAllClients
     @GetMapping(GET_ALL)
     fun getAllClients(@RequestParam("page", defaultValue = "1") page: Int): Page<ClientResponse> {
         return clientService.getAllByPage(page)
     }
 
-    @DeleteClientById
+    @DocumentDeleteClientById
     @DeleteMapping(DELETE)
     fun deleteClientById(@PathVariable("id") id: UUID) {
         clientService.deleteById(id)
     }
 
-    @CreateClient
+    @DocumentCreateClient
     @PostMapping(CREATE)
     @ResponseStatus(HttpStatus.CREATED)
     fun createClient(@RequestBody @Valid request: ClientCreateRequest): ClientResponse {
         return clientService.create(request)
     }
 
-    @GetClientById
+    @DocumentGetClientById
     @GetMapping(GET)
     fun getClientById(@PathVariable("id") id: UUID): ClientResponse {
         return clientService.getById(id)
     }
 
-    @UpdateClientById
+    @DocumentUpdateClientById
     @PutMapping(UPDATE)
     fun updateClientById(
         @PathVariable("id") id: UUID,
@@ -56,7 +55,7 @@ class ClientController(private val clientService: ClientService) {
         return clientService.updateById(id, request)
     }
 
-    @SearchClientByQuery
+    @DocumentgetClientsByQuery
     @GetMapping(SEARCH_BY_QUERY)
     fun getClientsBySearchQuery(@RequestParam("query") query: String): List<ClientResponse> {
         return clientService.searchClientsByQuery(query)

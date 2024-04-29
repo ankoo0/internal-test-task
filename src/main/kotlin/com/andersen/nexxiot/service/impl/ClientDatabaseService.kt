@@ -1,14 +1,13 @@
-package com.andersen.nexxiot.service
+package com.andersen.nexxiot.service.impl
 
 import com.andersen.nexxiot.db.ClientRepository
 import com.andersen.nexxiot.domain.model.ClientCreateModel
 import com.andersen.nexxiot.domain.model.ClientModel
 import com.andersen.nexxiot.domain.request.ClientUpdateRequest
-import com.andersen.nexxiot.domain.response.ClientResponse
 import com.andersen.nexxiot.exception.BusinessException
-import com.andersen.nexxiot.exception.CommonBusinessExceptions
 import com.andersen.nexxiot.exception.CommonBusinessExceptions.CLIENT_NOT_FOUND
 import com.andersen.nexxiot.exception.CommonBusinessExceptions.CLIENT_WITH_EMAIL_ALREADY_EXISTS
+import com.andersen.nexxiot.service.ClientMapper
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
