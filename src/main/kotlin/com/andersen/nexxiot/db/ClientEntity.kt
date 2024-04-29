@@ -9,6 +9,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed
 @Table(name = "client")
 @Indexed
 data class ClientEntity(
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     var id: UUID? = null,

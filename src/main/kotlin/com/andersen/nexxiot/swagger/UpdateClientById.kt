@@ -9,4 +9,4 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 @ApiResponse(responseCode = "500", description = "Internal server error")
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class UpdateClient()
+annotation class UpdateClientById()

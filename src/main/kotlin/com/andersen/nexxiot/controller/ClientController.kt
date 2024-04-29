@@ -10,10 +10,9 @@ import com.andersen.nexxiot.domain.request.ClientCreateRequest
 import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
 import com.andersen.nexxiot.service.ClientService
-import com.andersen.nexxiot.swagger.GetClientById
-import com.andersen.nexxiot.swagger.UpdateClient
-import io.swagger.v3.oas.annotations.Operation
+import com.andersen.nexxiot.swagger.*
 import jakarta.validation.Valid
+import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
@@ -21,16 +20,19 @@ import java.util.UUID
 @RestController
 class ClientController( private val clientService: ClientService) {
 
+    @GetAllClients
     @GetMapping(GET_ALL)
-    fun getAllClients(@RequestParam("page") page: Int): List<ClientResponse> {
+    fun getAllClients(@RequestParam("page", defaultValue = "1") page: Int): Page<ClientResponse> {
        return clientService.getAllByPage(page)
     }
 
+    @DeleteClientById
     @DeleteMapping(DELETE)
-    fun deleteClient(@PathVariable("id") id: UUID) {
+    fun deleteClientById(@PathVariable("id") id: UUID) {
         clientService.deleteById(id)
     }
 
+    @CreateClient
     @PostMapping(CREATE)
     @ResponseStatus(HttpStatus.CREATED)
     fun createClient(@RequestBody @Valid request: ClientCreateRequest): ClientResponse {
@@ -43,14 +45,15 @@ class ClientController( private val clientService: ClientService) {
         return clientService.getById(id)
     }
 
-    @UpdateClient
+    @UpdateClientById
     @PutMapping(UPDATE)
     fun updateClientById(@PathVariable("id") id: UUID, @Valid @RequestBody request: ClientUpdateRequest): ClientResponse {
         return clientService.updateById(id, request)
     }
 
+    @SearchClientByQuery
     @GetMapping(SEARCH)
-    fun getClientById(@RequestParam("query") query: String): List<ClientResponse> {
+    fun getClientBySearch(@RequestParam("query") query: String): List<ClientResponse> {
         return clientService.searchClients(query)
     }
 

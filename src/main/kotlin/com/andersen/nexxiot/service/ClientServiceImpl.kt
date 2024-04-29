@@ -5,9 +5,10 @@ import com.andersen.nexxiot.domain.request.ClientCreateRequest
 import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
 import com.andersen.nexxiot.integration.GenderizeFeignClient
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.UUID
+import java.util.*
 
 @Service
 class ClientServiceImpl(
@@ -20,7 +21,7 @@ class ClientServiceImpl(
         return clientMapper.toClientResponse(clientDatabaseService.getById(id))
     }
 
-    override fun getAllByPage(page: Int): List<ClientResponse> {
+    override fun getAllByPage(page: Int): Page<ClientResponse> {
         return clientDatabaseService.getAllByPage(page)
             .map { clientMapper.toClientResponse(it) }
     }
@@ -36,6 +37,7 @@ class ClientServiceImpl(
 
         val clientModel: ClientModel
         if (resp.probability >= 0.8) {
+            clientCreateModel.gender= resp.gender.uppercase(Locale.getDefault())
             clientModel = clientDatabaseService.save(clientCreateModel)
         } else {
             throw Exception("Gender not detected")

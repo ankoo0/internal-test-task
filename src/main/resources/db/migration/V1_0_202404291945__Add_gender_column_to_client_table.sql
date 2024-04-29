@@ -1,1 +1,1 @@
-alter table client add column gender varchar(10) not null default 'MALE'
+ALTER TABLE client ADD COLUMN gender VARCHAR(10) NOT NULL DEFAULT 'MALE'

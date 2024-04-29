@@ -5,6 +5,7 @@ import com.andersen.nexxiot.domain.model.ClientCreateModel
 import com.andersen.nexxiot.domain.model.ClientModel
 import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -44,10 +45,10 @@ class ClientDatabaseService(
         return clientMapper.toModel(clientEntity)
     }
 
-    fun getAllByPage(page: Int): List<ClientModel> {
+    fun getAllByPage(page: Int): Page<ClientModel> {
         val pageable = PageRequest.of(page - 1, 10)
         val clientPage = clientRepository.findAll(pageable)
-        return clientPage.map { clientMapper.toModel(it) }.toList()
+        return clientPage.map { clientMapper.toModel(it) }
     }
 
     fun delete(id: UUID) = clientRepository.deleteById(id)

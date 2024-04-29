@@ -6,5 +6,5 @@ data class ClientCreateModel(
     val email: String,
     val job: String?,
     val position: String?,
-    val gender: String?
+    var gender: String?
 )
