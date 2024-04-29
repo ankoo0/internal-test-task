@@ -28,8 +28,8 @@ class ClientDatabaseService(
 
 
         @Transactional(readOnly = true)
-    fun searchClients(query: String): List<ClientModel> {
-       return clientRepository.searchClients(query)
+    fun searchClients(query: String, vararg fields:String): List<ClientModel> {
+       return clientRepository.searchClients(query,*fields)
             .map { clientMapper.toModel(it) }
     }
 

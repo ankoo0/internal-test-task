@@ -4,7 +4,8 @@ import com.andersen.nexxiot.constants.ClientUrlConstants.CREATE
 import com.andersen.nexxiot.constants.ClientUrlConstants.DELETE
 import com.andersen.nexxiot.constants.ClientUrlConstants.GET
 import com.andersen.nexxiot.constants.ClientUrlConstants.GET_ALL
-import com.andersen.nexxiot.constants.ClientUrlConstants.SEARCH
+import com.andersen.nexxiot.constants.ClientUrlConstants.SEARCH_BY_NAME
+import com.andersen.nexxiot.constants.ClientUrlConstants.SEARCH_BY_QUERY
 import com.andersen.nexxiot.constants.ClientUrlConstants.UPDATE
 import com.andersen.nexxiot.domain.request.ClientCreateRequest
 import com.andersen.nexxiot.domain.request.ClientUpdateRequest
@@ -18,12 +19,12 @@ import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 @RestController
-class ClientController( private val clientService: ClientService) {
+class ClientController(private val clientService: ClientService) {
 
     @GetAllClients
     @GetMapping(GET_ALL)
     fun getAllClients(@RequestParam("page", defaultValue = "1") page: Int): Page<ClientResponse> {
-       return clientService.getAllByPage(page)
+        return clientService.getAllByPage(page)
     }
 
     @DeleteClientById
@@ -36,7 +37,7 @@ class ClientController( private val clientService: ClientService) {
     @PostMapping(CREATE)
     @ResponseStatus(HttpStatus.CREATED)
     fun createClient(@RequestBody @Valid request: ClientCreateRequest): ClientResponse {
-       return clientService.create(request)
+        return clientService.create(request)
     }
 
     @GetClientById
@@ -47,14 +48,25 @@ class ClientController( private val clientService: ClientService) {
 
     @UpdateClientById
     @PutMapping(UPDATE)
-    fun updateClientById(@PathVariable("id") id: UUID, @Valid @RequestBody request: ClientUpdateRequest): ClientResponse {
+    fun updateClientById(
+        @PathVariable("id") id: UUID,
+        @Valid @RequestBody request: ClientUpdateRequest
+    ): ClientResponse {
         return clientService.updateById(id, request)
     }
 
     @SearchClientByQuery
-    @GetMapping(SEARCH)
-    fun getClientBySearch(@RequestParam("query") query: String): List<ClientResponse> {
-        return clientService.searchClients(query)
+    @GetMapping(SEARCH_BY_QUERY)
+    fun getClientBySearchQuery(@RequestParam("query") query: String): List<ClientResponse> {
+        return clientService.searchClientsByQuery(query)
+    }
+
+    @GetMapping(SEARCH_BY_NAME)
+    fun getClientByNameParams(
+        @RequestParam("firstName", defaultValue = "") firstName: String,
+        @RequestParam("lastName", defaultValue = "") lastName: String
+    ): List<ClientResponse> {
+        return clientService.searchClientsByName(firstName, lastName)
     }
 
 }

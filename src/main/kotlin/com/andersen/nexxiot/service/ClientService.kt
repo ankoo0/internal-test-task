@@ -16,8 +16,10 @@ interface ClientService {
 
     fun create(request: ClientCreateRequest): ClientResponse
 
-    fun searchClients(query:String): List<ClientResponse>
+    fun searchClientsByQuery(query:String): List<ClientResponse>
 
     fun updateById(id:UUID, request: ClientUpdateRequest): ClientResponse
+
+    fun searchClientsByName(firstName:String, lastName:String): List<ClientResponse>
 
 }

@@ -46,13 +46,37 @@ class ClientServiceImpl(
         return clientMapper.toClientResponse(clientModel)
     }
 
-    override fun searchClients(query: String): List<ClientResponse> {
-        return clientDatabaseService.searchClients(query).map { clientMapper.toClientResponse(it) }
+    override fun searchClientsByQuery(query: String): List<ClientResponse> {
+        return searchClients(query, listOf("firstName","lastName"))
+    }
+
+    private fun searchClients(query: String, fields: List<String>): List<ClientResponse> {
+        return clientDatabaseService.searchClients(query, *fields.toTypedArray())
+            .map { clientMapper.toClientResponse(it) }
+    }
+
+    override fun searchClientsByName(firstName: String, lastName: String): List<ClientResponse> {
+        val query = when {
+            firstName.isBlank() && lastName.isNotBlank() -> lastName
+            firstName.isNotBlank() && lastName.isBlank() -> firstName
+            else -> "$firstName $lastName"
+        }
+
+        val fields = mutableListOf<String>()
+        if (firstName.isNotBlank()) {
+            fields.add("firstName")
+        }
+        if (lastName.isNotBlank()) {
+            fields.add("lastName")
+        }
+
+        return searchClients(query, fields)
     }
 
     override fun updateById(id:UUID, request: ClientUpdateRequest): ClientResponse {
         val clientModel = clientDatabaseService.update(request, id)
         return clientMapper.toClientResponse(clientModel)
     }
+
 
 }
