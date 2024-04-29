@@ -5,6 +5,10 @@ import com.andersen.nexxiot.domain.model.ClientCreateModel
 import com.andersen.nexxiot.domain.model.ClientModel
 import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
+import com.andersen.nexxiot.exception.BusinessException
+import com.andersen.nexxiot.exception.CommonBusinessExceptions
+import com.andersen.nexxiot.exception.CommonBusinessExceptions.CLIENT_NOT_FOUND
+import com.andersen.nexxiot.exception.CommonBusinessExceptions.CLIENT_WITH_EMAIL_ALREADY_EXISTS
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
@@ -26,6 +30,12 @@ class ClientDatabaseService(
         return clientMapper.toModel(updatedClient)
      }
 
+    fun checkByEmail(email: String) {
+        clientRepository.findByEmail(email).ifPresent { client ->
+            if (client.email == email)
+                throw BusinessException(CLIENT_WITH_EMAIL_ALREADY_EXISTS, email)
+        }
+    }
 
         @Transactional(readOnly = true)
     fun searchClients(query: String, vararg fields:String): List<ClientModel> {
@@ -37,7 +47,7 @@ class ClientDatabaseService(
         return clientRepository
             .findById(id)
             .map { clientMapper.toModel(it) }
-            .orElseThrow { NoSuchElementException("Client not found for id: $id") }
+            .orElseThrow { BusinessException(CLIENT_NOT_FOUND,id) }
     }
 
     fun save(createModel: ClientCreateModel): ClientModel {
@@ -51,6 +61,13 @@ class ClientDatabaseService(
         return clientPage.map { clientMapper.toModel(it) }
     }
 
-    fun delete(id: UUID) = clientRepository.deleteById(id)
+     fun deleteById(id: UUID) {
+        val optionalClient = clientRepository.findById(id)
 
+
+        optionalClient.ifPresentOrElse(
+            { clientRepository.deleteById(id) },
+            { throw BusinessException(CLIENT_NOT_FOUND, id) }
+        )
+    }
 }

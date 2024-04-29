@@ -21,10 +21,15 @@ class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    fun handleBusinessException(e: BusinessException) : ProblemDetail {
+        return ProblemDetail.forStatusAndDetail(e.getHttpStatus(),e.message)
+    }
+
+    @ExceptionHandler
     fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ProblemDetail{
         val bindingResult = e.bindingResult
         val fieldErrors = bindingResult.fieldErrors
-        val problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,e.message)
+        val problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,"Request contains constraint violations")
         problemDetail.setProperty("violations", mapToValidationErrors(fieldErrors) )
         return problemDetail
     }

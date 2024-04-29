@@ -32,5 +32,9 @@ data class ClientUpdateRequest(
 
     val position: String?,
 
+    @field:Pattern(
+        regexp = ValidationConstants.GENDER_PATTERN,
+        message = "Gender should be either male or female"
+    )
     val gender: String?
 )

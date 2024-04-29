@@ -13,6 +13,7 @@ import com.andersen.nexxiot.domain.response.ClientResponse
 import com.andersen.nexxiot.service.ClientService
 import com.andersen.nexxiot.swagger.*
 import jakarta.validation.Valid
+import jakarta.validation.constraints.NotBlank
 import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -57,12 +58,12 @@ class ClientController(private val clientService: ClientService) {
 
     @SearchClientByQuery
     @GetMapping(SEARCH_BY_QUERY)
-    fun getClientBySearchQuery(@RequestParam("query") query: String): List<ClientResponse> {
+    fun getClientsBySearchQuery(@RequestParam("query") query: String): List<ClientResponse> {
         return clientService.searchClientsByQuery(query)
     }
 
     @GetMapping(SEARCH_BY_NAME)
-    fun getClientByNameParams(
+    fun getClientsByNameParams(
         @RequestParam("firstName", defaultValue = "") firstName: String,
         @RequestParam("lastName", defaultValue = "") lastName: String
     ): List<ClientResponse> {

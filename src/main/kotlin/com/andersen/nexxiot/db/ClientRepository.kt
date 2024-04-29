@@ -9,6 +9,8 @@ import java.util.*
 @Repository
 interface ClientRepository : JpaRepository<ClientEntity,UUID>, SearchClientRepository{
 
+    fun findByEmail(email:String) : Optional<ClientEntity>
+
     override fun findAll(pageable:Pageable): Page<ClientEntity>
 
 }
