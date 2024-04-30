@@ -22,12 +22,16 @@ class ClientDatabaseService(
 ) {
 
     @Transactional
-     fun update(request: ClientUpdateRequest, id:UUID): ClientModel {
-         val existingClient = clientRepository.findById(id).orElseThrow { NoSuchElementException("No such user") }
-        clientMapper.updateEntity(existingClient,request)
+    fun update(request: ClientUpdateRequest, id: UUID): ClientModel {
+        val existingClient = clientRepository
+            .findById(id)
+            .orElseThrow { BusinessException(CLIENT_NOT_FOUND, id) }
+
+        clientMapper.updateEntity(existingClient, request)
+
         val updatedClient = clientRepository.save(existingClient)
         return clientMapper.toModel(updatedClient)
-     }
+    }
 
     fun checkByEmail(email: String) {
         clientRepository.findByEmail(email).ifPresent { client ->
@@ -36,9 +40,9 @@ class ClientDatabaseService(
         }
     }
 
-        @Transactional(readOnly = true)
-    fun searchClients(query: String, vararg fields:String): List<ClientModel> {
-       return clientRepository.searchClients(query,*fields)
+    @Transactional(readOnly = true)
+    fun searchClients(query: String, vararg fields: String): List<ClientModel> {
+        return clientRepository.searchClients(query, *fields)
             .map { clientMapper.toModel(it) }
     }
 
@@ -46,7 +50,7 @@ class ClientDatabaseService(
         return clientRepository
             .findById(id)
             .map { clientMapper.toModel(it) }
-            .orElseThrow { BusinessException(CLIENT_NOT_FOUND,id) }
+            .orElseThrow { BusinessException(CLIENT_NOT_FOUND, id) }
     }
 
     fun save(createModel: ClientCreateModel): ClientModel {
@@ -60,9 +64,8 @@ class ClientDatabaseService(
         return clientPage.map { clientMapper.toModel(it) }
     }
 
-     fun deleteById(id: UUID) {
+    fun deleteById(id: UUID) {
         val optionalClient = clientRepository.findById(id)
-
 
         optionalClient.ifPresentOrElse(
             { clientRepository.deleteById(id) },

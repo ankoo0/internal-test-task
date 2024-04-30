@@ -55,12 +55,13 @@ class ClientController(private val clientService: ClientService) {
         return clientService.updateById(id, request)
     }
 
-    @DocumentgetClientsByQuery
+    @DocumentGetClientsByQuery
     @GetMapping(SEARCH_BY_QUERY)
     fun getClientsBySearchQuery(@RequestParam("query") query: String): List<ClientResponse> {
         return clientService.searchClientsByQuery(query)
     }
 
+    @DocumentGetClientsByNameParams
     @GetMapping(SEARCH_BY_NAME)
     fun getClientsByNameParams(
         @RequestParam("firstName", defaultValue = "") firstName: String,

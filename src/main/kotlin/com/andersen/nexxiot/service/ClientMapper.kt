@@ -22,6 +22,8 @@ interface ClientMapper {
 
     fun toModel(entity: ClientEntity): ClientModel
 
+    fun toModel(request: ClientCreateRequest): ClientModel
+
     fun toCreateModel(request:ClientCreateRequest): ClientCreateModel
 
 }

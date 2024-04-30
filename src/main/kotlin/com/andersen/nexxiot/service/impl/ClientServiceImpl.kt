@@ -5,7 +5,8 @@ import com.andersen.nexxiot.domain.request.ClientCreateRequest
 import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
 import com.andersen.nexxiot.exception.BusinessException
-import com.andersen.nexxiot.exception.CommonBusinessExceptions
+import com.andersen.nexxiot.exception.CommonBusinessExceptions.EMPTY_NAME_PARAMETERS
+import com.andersen.nexxiot.exception.CommonBusinessExceptions.GENDER_NOT_DETECTED
 import com.andersen.nexxiot.integration.GenderizeFeignClient
 import com.andersen.nexxiot.service.ClientMapper
 import com.andersen.nexxiot.service.ClientService
@@ -36,19 +37,20 @@ class ClientServiceImpl(
 
     @Transactional
     override fun create(request: ClientCreateRequest): ClientResponse {
-
         clientDatabaseService.checkByEmail(request.email)
 
         val clientCreateModel = clientMapper.toCreateModel(request)
-        val resp = genderizeFeignClient.getGenderProbability(clientCreateModel.firstName)
 
-        val clientModel: ClientModel
-        if (resp.probability >= 0.8) {
-            clientCreateModel.gender= resp.gender.uppercase(Locale.getDefault())
-            clientModel = clientDatabaseService.save(clientCreateModel)
-        } else {
-            throw BusinessException(CommonBusinessExceptions.GENDER_NOT_DETECTED,request.firstName)
+        if (request.gender == null) {
+            val resp = genderizeFeignClient.getGenderProbability(request.firstName)
+            if (resp.probability >= 0.8) {
+                clientCreateModel.gender = resp.gender.uppercase(Locale.getDefault())
+            } else {
+                throw BusinessException(GENDER_NOT_DETECTED, request.firstName)
+            }
         }
+
+        val clientModel: ClientModel = clientDatabaseService.save(clientCreateModel)
 
         return clientMapper.toClientResponse(clientModel)
     }
@@ -62,10 +64,14 @@ class ClientServiceImpl(
             .map { clientMapper.toClientResponse(it) }
     }
 
-    // probably, specifications is more suitable here but as you limit task to just first and last name I will leave as-is
+    /*
+     probably, specifications is more scalable solution here
+     but as you limited task to just first and last name
+     I will leave it as-is
+     */
     override fun searchClientsByName(firstName: String, lastName: String): List<ClientResponse> {
         val query = when {
-            firstName.isBlank() && lastName.isBlank() -> throw IllegalArgumentException("At least one of firstName or lastName parameters must be provided")
+            firstName.isBlank() && lastName.isBlank() -> throw BusinessException(EMPTY_NAME_PARAMETERS)
             firstName.isBlank() && lastName.isNotBlank() -> lastName
             firstName.isNotBlank() && lastName.isBlank() -> firstName
             else -> "$firstName $lastName"
@@ -89,6 +95,5 @@ class ClientServiceImpl(
         val clientModel = clientDatabaseService.update(request, id)
         return clientMapper.toClientResponse(clientModel)
     }
-
 
 }
