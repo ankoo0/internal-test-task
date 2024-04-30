@@ -30,7 +30,7 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
-//	implementation("org.hibernate:hibernate-search-orm:5.11.12.Final")
+
 	implementation("org.hibernate.search:hibernate-search-mapper-orm:7.1.1.Final")
 	implementation("org.hibernate.search:hibernate-search-bom:7.1.1.Final")
 	implementation("org.hibernate.search:hibernate-search-backend-lucene:7.1.1.Final")
@@ -42,7 +42,12 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	runtimeOnly("org.postgresql:postgresql")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.0")
+
+	testImplementation(("org.springframework.boot:spring-boot-testcontainers"))
+	testImplementation ("org.testcontainers:junit-jupiter:1.19.7")
 	testImplementation("org.instancio:instancio-core:3.6.0")
+	testImplementation("org.testcontainers:postgresql:1.19.7")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 }

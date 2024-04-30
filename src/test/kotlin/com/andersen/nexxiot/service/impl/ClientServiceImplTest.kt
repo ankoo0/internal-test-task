@@ -68,7 +68,6 @@ class ClientServiceImplTest {
             .create()
         val exceptionMessage = "Gender for first name ${request.firstName} is not detected"
 
-
         val response = Instancio.of(GenderizeResponse::class.java)
             .set(field(GenderizeResponse::gender), null)
             .set(field(GenderizeResponse::probability), 0.0)

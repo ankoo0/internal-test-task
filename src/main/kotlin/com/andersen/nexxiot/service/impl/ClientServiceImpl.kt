@@ -44,11 +44,13 @@ class ClientServiceImpl(
         if (request.gender == null) {
             val resp = genderizeFeignClient.getGenderProbability(request.firstName)
             if (resp.probability >= 0.8) {
-                clientCreateModel.gender = resp.gender.uppercase(Locale.getDefault())
+                clientCreateModel.gender = resp.gender
             } else {
                 throw BusinessException(GENDER_NOT_DETECTED, request.firstName)
             }
         }
+
+        clientCreateModel.gender = clientCreateModel.gender?.uppercase(Locale.getDefault())
 
         val clientModel: ClientModel = clientDatabaseService.save(clientCreateModel)
 
@@ -92,7 +94,13 @@ class ClientServiceImpl(
     @Transactional
     override fun updateById(id:UUID, request: ClientUpdateRequest): ClientResponse {
         clientDatabaseService.checkByEmail(request.email)
+
+        request.gender = request.gender?.uppercase()
+
         val clientModel = clientDatabaseService.update(request, id)
+
+        clientModel.gender = clientModel.gender?.lowercase()
+
         return clientMapper.toClientResponse(clientModel)
     }
 
