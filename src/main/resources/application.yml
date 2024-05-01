@@ -13,8 +13,5 @@ spring:
     hibernate:
       ddl-auto: create-drop
     open-in-view: false
-  sql:
-    init:
-      mode: always
   flyway:
     enabled: true
