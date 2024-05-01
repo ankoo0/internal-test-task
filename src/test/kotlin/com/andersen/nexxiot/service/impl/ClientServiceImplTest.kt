@@ -142,35 +142,4 @@ class ClientServiceImplTest {
         assertEquals(exceptionMessage,exception.message)
     }
 
-
-//    @Test
-//    fun `create() when gender probability greater or equals to 0,8 then save client`() {
-//        val request = Instancio.of(ClientCreateRequest::class.java)
-//            .set(field(ClientCreateRequest::firstName), "John")
-//            .create()
-//        val clientCreateModel = Instancio.of(ClientCreateModel::class.java)
-//            .set(field(ClientCreateModel::firstName), "John")
-//            .create()
-//        val response = Instancio.of(GenderizeResponse::class.java)
-//            .set(field(GenderizeResponse::gender), "male")
-//            .set(field(GenderizeResponse::probability), 0.8)
-//            .create()
-//        val clientModel =Instancio.of(ClientModel::class.java)
-//            .set(field(ClientModel::firstName), "John")
-//            .create()
-//
-//        `when`(genderizeFeignClient.getGenderProbability(clientCreateModel.firstName)).thenReturn(response)
-//        // Mock the save method to return the clientModel
-//        `when`(clientDatabaseService.save(clientCreateModel)).thenReturn(clientModel)
-//
-//        // Call the create method
-//        val clientResponse = clientService.create(request)
-//
-//        // Verify that the client is saved with the correct clientCreateModel
-//        verify(clientDatabaseService).save(clientCreateModel)
-//
-//        // Assert the response
-//        assertEquals(request.firstName, clientResponse.firstName)
-//        // Add more assertions based on the expected behavior of the create method
-//    }
 }

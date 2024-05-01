@@ -64,6 +64,7 @@ class ClientDatabaseService(
         return clientPage.map { clientMapper.toModel(it) }
     }
 
+    @Transactional
     fun deleteById(id: UUID) {
         val optionalClient = clientRepository.findById(id)
 

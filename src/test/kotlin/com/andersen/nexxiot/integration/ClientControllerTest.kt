@@ -5,8 +5,10 @@ import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -43,7 +45,6 @@ class ClientControllerTest @Autowired constructor(
 
     @Test
     fun `getAllClients endpoint should return a list of clients`() {
-        println(container.isRunning)
         val responseEntity = testRestTemplate.getForEntity("/api/v1/clients", String::class.java)
         assertEquals(HttpStatus.OK, responseEntity.statusCode)
         assertNotNull(responseEntity.body)
