@@ -25,7 +25,7 @@ import java.util.*
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 @Sql("/test-data.sql")
-class ClientControllerIntegrationTest @Autowired constructor(
+class ClientControllerTest @Autowired constructor(
     private var testRestTemplate: TestRestTemplate,
 ) {
     private val objectMapper = ObjectMapper().registerKotlinModule()

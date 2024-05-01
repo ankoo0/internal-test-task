@@ -1,5 +1,6 @@
-package com.andersen.nexxiot.db
+package com.andersen.nexxiot.db.repository
 
+import com.andersen.nexxiot.db.ClientEntity
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import org.hibernate.search.mapper.orm.Search

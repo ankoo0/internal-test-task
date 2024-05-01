@@ -1,6 +1,6 @@
 package com.andersen.nexxiot.service.impl
 
-import com.andersen.nexxiot.db.ClientRepository
+import com.andersen.nexxiot.db.repository.ClientRepository
 import com.andersen.nexxiot.domain.model.ClientCreateModel
 import com.andersen.nexxiot.domain.model.ClientModel
 import com.andersen.nexxiot.domain.request.ClientUpdateRequest

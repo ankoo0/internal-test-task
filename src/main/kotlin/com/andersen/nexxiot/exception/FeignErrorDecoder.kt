@@ -7,6 +7,6 @@ import java.lang.Exception
 class FeignErrorDecoder : ErrorDecoder {
 
     override fun decode(p0: String?, p1: Response?): Exception {
-        TODO("Not yet implemented")
+        TODO("Make mapping from genderize response to ProblemDetail")
     }
 }
