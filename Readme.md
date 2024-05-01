@@ -1,6 +1,6 @@
 # Nexxiod Test Task
 
-Welcome to the Nexxiod test task repository! This guide will help you set up and run the project using Docker Compose. You can interact with the API endpoints using Swagger UI or Postman for testing.
+This guide will help you set up and run the project using Docker Compose. You can interact with the API endpoints using Swagger UI or Postman for testing.
 
 ### Getting Started
 
@@ -9,7 +9,6 @@ git clone https://github.com/ankoo0/internal-test-task
 #### Navigate to Project Folder
 cd <your-project-folder>
 #### Run Docker Compose
-bash
 docker-compose up
 ### Accessing the Application
 
