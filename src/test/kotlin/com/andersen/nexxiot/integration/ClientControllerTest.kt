@@ -5,10 +5,8 @@ import com.andersen.nexxiot.domain.request.ClientUpdateRequest
 import com.andersen.nexxiot.domain.response.ClientResponse
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -17,7 +15,8 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
-import org.springframework.test.context.jdbc.Sql
+import org.springframework.http.ResponseEntity
+import org.springframework.test.context.ActiveProfiles
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
@@ -26,7 +25,7 @@ import java.util.*
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
-@Sql("/test-data.sql")
+@ActiveProfiles("test")
 class ClientControllerTest @Autowired constructor(
     private var testRestTemplate: TestRestTemplate,
 ) {
@@ -39,6 +38,8 @@ class ClientControllerTest @Autowired constructor(
             withDatabaseName("db")
             withUsername("user")
             withPassword("password")
+            start()
+
         }
 
     }
@@ -48,7 +49,6 @@ class ClientControllerTest @Autowired constructor(
         val responseEntity = testRestTemplate.getForEntity("/api/v1/clients", String::class.java)
         assertEquals(HttpStatus.OK, responseEntity.statusCode)
         assertNotNull(responseEntity.body)
-        println("Response from getAllClients endpoint: ${responseEntity.body}")
     }
 
     @Test
@@ -111,10 +111,16 @@ class ClientControllerTest @Autowired constructor(
     }
 
     @Test
-    fun `deleteClientById endpoint should return a client`() {
+    fun `deleteClientById endpoint with non-existing id should respond with 404`() {
         val clientId = UUID.randomUUID()
-        val responseEntity = testRestTemplate.delete("/api/v1/clients/$clientId", String::class.java)
-        assertEquals(HttpStatus.NOT_FOUND, responseEntity)
+        val responseEntity: ResponseEntity<Void> = testRestTemplate.exchange(
+            "/api/v1/clients/$clientId",
+            HttpMethod.DELETE,
+            null,
+            Void::class.java
+        )
+
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.statusCode)
     }
 
 
