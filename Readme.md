@@ -7,7 +7,7 @@ This guide will help you set up and run the project using Docker Compose. You ca
 #### Clone the Repository
 git clone https://github.com/ankoo0/internal-test-task
 #### Navigate to Project Folder
-cd <your-project-folder>
+cd your-project-folder
 #### Run Docker Compose
 docker-compose up
 ### Accessing the Application
